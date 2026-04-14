@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: secure-api-db
+    restart: always
+    environment:
+      POSTGRES_USER: {DB_USER} # O nome do usuário do banco
+      POSTGRES_PASSWORD: {DB_PASSWORD}
+      POSTGRES_DB: {DB_NAME} # O nome do banco de dados
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/data/postgres # Volume para os dados persistirem
+
+volumes:
+  postgres_data:

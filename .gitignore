@@ -1,0 +1,25 @@
+# Dependências
+node_modules/
+
+# Variáveis de Ambiente (Segurança)
+.env
+.env.test
+.env.production
+
+# Logs de Erro do Node/NPM
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Relatórios de Testes (Gerados pelo Jest)
+coverage/
+
+# Arquivos de Sistema Operacional (Mac e Windows)
+.DS_Store
+Thumbs.db
+
+# Configurações de Editor de Texto (Opcional, mas recomendado)
+.vscode/
+.idea/
