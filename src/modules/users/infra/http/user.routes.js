@@ -1,9 +1,18 @@
 const { Router } = require('express');
-const userController = require('./user.controller.js');
+
+// 1. Importações
+const UserRepository = require('../persistence/user.repository');
+const CreateUserService = require('../../application/create_user.service'); 
+const UserController = require('./user.controller');
+
+// 2. Construção e Injeção de Dependências
+const userRepository = new UserRepository(); 
+const createUserService = new CreateUserService(userRepository); 
+const userController = new UserController(createUserService);
 
 const userRoutes = Router();
 
-// Define a rota POST para criar um novo usuário, que chama o método create do UserController
-userRoutes.post('/', userController.create);
+// 3. A Rota
+userRoutes.post('/', userController.create.bind(userController));
 
 module.exports = userRoutes;

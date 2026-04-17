@@ -1,10 +1,12 @@
-const createUserService = require('../../application/create_user.service');
-
 class UserController {
+    constructor(createUserService) {
+        this.createUserService = createUserService;
+    }
+
     async create(req, res) {
         try {
             const { name, email, password } = req.body;
-            const user = await createUserService.execute({ name, email, password });
+            const user = await this.createUserService.execute({ name, email, password });
             return res.status(201).json(user);
         } catch (error) {
             // O detetive entra em ação aqui!
@@ -14,4 +16,4 @@ class UserController {
     }
 }
 
-module.exports = new UserController();
+module.exports = UserController;

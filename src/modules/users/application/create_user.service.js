@@ -1,11 +1,14 @@
 const bcrypt = require('bcrypt');
-const userRepository = require('../infra/persistence/user.repository');
 
 class CreateUserService {
+    constructor(userRepository) {
+        this.userRepository = userRepository;
+    }
+
     // A função execute tem que estar solta aqui, direto dentro da classe
     async execute({ name, email, password }) {
 
-        const userAlreadyExists = await userRepository.findByEmail(email);
+        const userAlreadyExists = await this.userRepository.findByEmail(email);
 
         if (userAlreadyExists) {
             throw new Error('Email already in use');
@@ -13,7 +16,7 @@ class CreateUserService {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const user = await userRepository.create({
+        const user = await this.userRepository.create({
             name,
             email,
             password: hashedPassword
@@ -23,5 +26,4 @@ class CreateUserService {
     }
 }
 
-// O segredo: module e o "new" instanciando a classe!
-module.exports = new CreateUserService();
+module.exports = CreateUserService;
